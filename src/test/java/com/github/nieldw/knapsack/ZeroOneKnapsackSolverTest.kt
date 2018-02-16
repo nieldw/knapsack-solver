@@ -33,4 +33,38 @@ class ZeroOneKnapsackSolverTest {
             solver.solve(1.0, listOf(Item(1, Double.MAX_VALUE, Double.MAX_VALUE)))
         })
     }
+
+    @Test
+    fun `the solution for a singleton set with weight less than the limit is that set`() {
+        val expectedItem = Item(1, 4.5, 10.0)
+        expect(listOf(expectedItem), {
+            solver.solve(5.0, listOf(expectedItem))
+        })
+    }
+
+    @Test
+    fun `the solution for a singleton set with weight equal to the limit is that set`() {
+        val expectedItem = Item(1, 5.0, 10.0)
+        expect(listOf(expectedItem), {
+            solver.solve(5.0, listOf(expectedItem))
+        })
+    }
+
+    @Test
+    fun `the solution for two items, with the second larger than the weight limit, is the smaller item`() {
+        val expectedItem = Item(1, 4.5, 10.0)
+        val otherItem = Item(2, 5.5, 10.0)
+        expect(listOf(expectedItem), {
+            solver.solve(5.0, listOf(expectedItem, otherItem))
+        })
+    }
+
+    @Test
+    fun `the solution for two items, with weight of the first equal to the weight limit, is the smaller item`() {
+        val expectedItem = Item(1, 4.5, 10.0)
+        val otherItem = Item(2, 5.5, 10.0)
+        expect(listOf(expectedItem), {
+            solver.solve(5.0, listOf(expectedItem, otherItem))
+        })
+    }
 }
