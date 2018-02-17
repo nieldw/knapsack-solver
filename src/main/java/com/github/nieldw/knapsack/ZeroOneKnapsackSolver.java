@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.format;
+import static java.util.Comparator.comparingDouble;
 
 /**
  * A solver for the 0/1 knapsack problem.
@@ -27,18 +28,15 @@ public class ZeroOneKnapsackSolver implements KnapsackSolver {
             return Collections.emptyList();
         }
 
-        if (items.get(items.size() - 1).getWeight() > weightLimit) {
-            return solveForWeightAndSet2(weightLimit, items.subList(0, items.size() - 1));
+        items.sort(comparingDouble(Item::getWeight));
+        if (last(items).getWeight() > weightLimit) {
+            return solveForWeightAndSet(weightLimit, items.subList(0, items.size() - 1));
         } else {
             return items;
         }
     }
 
-    private List<Item> solveForWeightAndSet2(Double weightLimit, List<Item> items) {
-        if (items.isEmpty()) {
-            return Collections.emptyList();
-        } else {
-            return items;
-        }
+    private Item last(List<Item> items) {
+        return items.get(items.size() - 1);
     }
 }

@@ -67,4 +67,33 @@ class ZeroOneKnapsackSolverTest {
             solver.solve(5.0, listOf(expectedItem, otherItem))
         })
     }
+
+    @Test
+    fun `solve for two items, both included`() {
+        val expectedItem1 = Item(1, 2.5, 10.0)
+        val expectedItem2 = Item(2, 2.5, 10.0)
+        expect(listOf(expectedItem1, expectedItem2), {
+            solver.solve(5.0, listOf(expectedItem1, expectedItem2))
+        })
+    }
+
+    @Test
+    fun `solve for three items, first two included, by weight only`() {
+        val expectedItem1 = Item(1, 2.5, 10.0)
+        val expectedItem2 = Item(2, 2.5, 10.0)
+        val otherItem = Item(3, 5.5, 10.0)
+        expect(listOf(expectedItem1, expectedItem2), {
+            solver.solve(5.0, listOf(expectedItem1, expectedItem2, otherItem))
+        })
+    }
+
+    @Test
+    fun `solve for three items, last two included, by weight only`() {
+        val otherItem = Item(1, 5.5, 10.0)
+        val expectedItem1 = Item(2, 2.5, 10.0)
+        val expectedItem2 = Item(3, 2.5, 10.0)
+        expect(listOf(expectedItem1, expectedItem2), {
+            solver.solve(5.0, listOf(otherItem, expectedItem1, expectedItem2))
+        })
+    }
 }
