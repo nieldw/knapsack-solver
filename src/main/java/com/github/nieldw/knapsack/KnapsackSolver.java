@@ -1,5 +1,6 @@
 package com.github.nieldw.knapsack;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -14,5 +15,5 @@ public interface KnapsackSolver {
      * @return A set of {@link Item}s for the given problem
      * @throws IllegalArgumentException If an item with {@link Item#index} less than 1 is found
      */
-    List<Item> solve(Double weightLimit, List<Item> items) throws IllegalArgumentException;
+    List<Item> solve(BigDecimal weightLimit, List<Item> items) throws IllegalArgumentException;
 }

@@ -1,3 +1,5 @@
 package com.github.nieldw.knapsack
 
-data class Item(val index: Int, val weight: Double, val value: Double)
+import java.math.BigDecimal
+
+data class Item(val index: Int, val weight: BigDecimal, val value: BigDecimal)
