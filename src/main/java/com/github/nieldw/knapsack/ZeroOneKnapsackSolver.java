@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import static java.lang.String.format;
 import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -29,8 +31,8 @@ public class ZeroOneKnapsackSolver implements KnapsackSolver {
         Integer maxScale = items.stream().map(i -> i.getWeight().scale()).max(comparingInt(i -> i)).orElse(0);
         List<LongWeightItem> longWeightItems = items.stream()
                 .sorted(comparing(Item::getWeight))
-                .map(i -> new LongWeightItem(i.getIndex(), movePointToRight(i.getWeight(), maxScale), i.getValue()))
-                .collect(toList());
+                .map(toLongWeightItem(maxScale))
+                .collect(toCollection(() -> new ArrayList<>(items.size())));
 
         List<LongWeightItem> solution = findSolutionIteratively(movePointToRight(weightLimit, maxScale), longWeightItems);
         return solution.stream()
@@ -72,6 +74,11 @@ public class ZeroOneKnapsackSolver implements KnapsackSolver {
         return solutionCache.get(new SolutionKey(items.size(), weightLimit)).solution;
     }
 
+    @NotNull
+    private Function<Item, LongWeightItem> toLongWeightItem(Integer maxScale) {
+        return i -> new LongWeightItem(i.getIndex(), movePointToRight(i.getWeight(), maxScale), i.getValue());
+    }
+
     private long movePointToRight(BigDecimal bigDecimal, Integer n) {
         return bigDecimal.movePointRight(n).longValueExact();
     }
@@ -85,15 +92,6 @@ public class ZeroOneKnapsackSolver implements KnapsackSolver {
             this.index = index;
             this.weight = weight;
             this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return "LongWeightItem{" +
-                    "index=" + index +
-                    ", weight=" + weight +
-                    ", value=" + value +
-                    '}';
         }
     }
 
@@ -122,14 +120,6 @@ public class ZeroOneKnapsackSolver implements KnapsackSolver {
             result = 31 * result + (int) (weightLimit ^ (weightLimit >>> 32));
             return result;
         }
-
-        @Override
-        public String toString() {
-            return "SolutionKey{" +
-                    "highestIndex=" + highestIndex +
-                    ", weightLimit=" + weightLimit +
-                    '}';
-        }
     }
 
     private class Solution {
@@ -146,14 +136,6 @@ public class ZeroOneKnapsackSolver implements KnapsackSolver {
             solution.addAll(this.solution);
             solution.add(item);
             return new Solution(this.value.add(item.value), solution);
-        }
-
-        @Override
-        public String toString() {
-            return "Solution{" +
-                    "value=" + value +
-                    ", solution=" + solution +
-                    '}';
         }
     }
 }
