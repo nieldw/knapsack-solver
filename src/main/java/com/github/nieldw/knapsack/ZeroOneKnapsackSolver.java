@@ -35,6 +35,7 @@ public class ZeroOneKnapsackSolver implements KnapsackSolver {
         List<LongWeightItem> solution = findSolutionIteratively(movePointToRight(weightLimit, maxScale), longWeightItems);
         return solution.stream()
                 .map(i -> new Item(i.index, new BigDecimal(i.weight).movePointLeft(maxScale), i.value))
+                .sorted(comparing(Item::getIndex))
                 .collect(toList());
     }
 
