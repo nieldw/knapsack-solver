@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
  */
 public class ZeroOneKnapsackSolver extends ConstrainedKnapsackSolver implements KnapsackSolver {
 
-    ZeroOneKnapsackSolver() {
+    public ZeroOneKnapsackSolver() {
         this(Collections.emptyList());
     }
 
@@ -28,7 +28,7 @@ public class ZeroOneKnapsackSolver extends ConstrainedKnapsackSolver implements 
      *
      * @param constraints The {@link Constraint}s applied to problems by this {@link KnapsackSolver}
      */
-    ZeroOneKnapsackSolver(List<Constraint> constraints) {
+    public ZeroOneKnapsackSolver(List<Constraint> constraints) {
         super(constraints);
     }
 

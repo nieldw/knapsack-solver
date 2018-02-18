@@ -1,6 +1,7 @@
 package com.github.nieldw.packer;
 
 import com.github.nieldw.knapsack.KnapsackSolver;
+import com.github.nieldw.knapsack.constraints.KnapsackProblemConstraintViolationException;
 
 /**
  * This controller controls interaction between the application layer, and domain layer.
@@ -23,5 +24,5 @@ public class PackingController {
         this.solver = solver;
     }
 
-    public String solve(String rawProblem) { return ""; }
+    public String solve(String rawProblem) throws KnapsackProblemConstraintViolationException { return ""; }
 }
