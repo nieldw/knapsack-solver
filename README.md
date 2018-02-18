@@ -15,3 +15,13 @@ allow an exact representation of a number.
 
 The 0/1 Knapsack Solver adjusts the weight of all items by multiplying the weight of each item by 10 times the largest
 number of decimal places among all the weights, thereby reducing the problem to that of integer weighted items.
+
+## Constraints
+
+Implementations of the ConstrainedKnapsackSolver can be supplied with a list of Constraints. A number of Constraint
+implementations are provided:
+
+- KnapsackWeightConstraint
+- ItemListSizeConstraint
+- ItemValueConstraint
+- ItemWeightConstraint

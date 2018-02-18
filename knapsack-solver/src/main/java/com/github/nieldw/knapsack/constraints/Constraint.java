@@ -10,7 +10,7 @@ public interface Constraint {
      * Check that the constraint is not violated by the given {@link KnapsackProblem}.
      *
      * @param problem The {@link KnapsackProblem} to check
-     * @throws IllegalArgumentException If the constraint is violated
+     * @throws KnapsackProblemConstraintViolationException If the constraint is violated
      */
-    void check(KnapsackProblem problem) throws IllegalArgumentException;
+    void check(KnapsackProblem problem) throws KnapsackProblemConstraintViolationException;
 }
