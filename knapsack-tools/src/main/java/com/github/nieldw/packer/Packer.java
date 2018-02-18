@@ -33,6 +33,9 @@ public class Packer {
 
         PackingController controller = getPackingController();
         String rawProblem = getFileContents(file);
+        if (rawProblem.trim().length() == 0) {
+            return "";
+        }
 
         try {
             return controller.solve(rawProblem);
