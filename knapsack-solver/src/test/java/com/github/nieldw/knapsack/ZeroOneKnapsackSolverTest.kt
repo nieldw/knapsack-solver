@@ -24,7 +24,7 @@ class ZeroOneKnapsackSolverTest {
     @Test
     fun `it should throw IllegalArgumentException if set contains an item with index less than 1`() {
         assertFailsWith<IllegalArgumentException> {
-            solver.solve(ONE, listOf(Item(1, ONE, ONE), Item(0, ONE, ONE)))
+            solver.solve(KnapsackProblem(ONE, listOf(Item(1, ONE, ONE), Item(0, ONE, ONE))))
         }
     }
 
@@ -32,21 +32,21 @@ class ZeroOneKnapsackSolverTest {
     fun `it should throw KnapsackProblemConstraintViolationException if constraint is violated`() {
         this.solver = ZeroOneKnapsackSolver(listOf(Constraint { throw KnapsackProblemConstraintViolationException("dummy constraint violated") }))
         assertFailsWith<KnapsackProblemConstraintViolationException> {
-            solver.solve(ONE, listOf(Item(1, ONE, ONE), Item(0, ONE, ONE)))
+            solver.solve(KnapsackProblem(ONE, listOf(Item(1, ONE, ONE), Item(0, ONE, ONE))))
         }
     }
 
     @Test
     fun `the solution for the empty set is an empty set`() {
         expect(emptyList(), {
-            solver.solve(ONE, emptyList())
+            solver.solve(KnapsackProblem(ONE, emptyList()))
         })
     }
 
     @Test
     fun `the solution for a singleton set with weight greater than the limit is an empty set`() {
         expect(emptyList(), {
-            solver.solve(ONE, listOf(Item(1, TEN, TEN)))
+            solver.solve(KnapsackProblem(ONE, listOf(Item(1, TEN, TEN))))
         })
     }
 
@@ -54,7 +54,7 @@ class ZeroOneKnapsackSolverTest {
     fun `the solution for a singleton set with weight less than the limit is that set`() {
         val expectedItem = Item(1, weight("4.5"), value("10.0"))
         expect(listOf(expectedItem), {
-            solver.solve(weight("5.0"), listOf(expectedItem))
+            solver.solve(KnapsackProblem(weight("5.0"), listOf(expectedItem)))
         })
     }
 
@@ -62,7 +62,7 @@ class ZeroOneKnapsackSolverTest {
     fun `the solution for a singleton set with weight equal to the limit is that set`() {
         val expectedItem = Item(1, weight("5.0"), value("10.0"))
         expect(listOf(expectedItem), {
-            solver.solve(weight("5.0"), listOf(expectedItem))
+            solver.solve(KnapsackProblem(weight("5.0"), listOf(expectedItem)))
         })
     }
 
@@ -71,7 +71,7 @@ class ZeroOneKnapsackSolverTest {
         val expectedItem = Item(1, weight("4.5"), value("10.0"))
         val otherItem = Item(2, weight("5.5"), value("10.0"))
         expect(listOf(expectedItem), {
-            solver.solve(weight("5.0"), listOf(expectedItem, otherItem))
+            solver.solve(KnapsackProblem(weight("5.0"), listOf(expectedItem, otherItem)))
         })
     }
 
@@ -80,7 +80,7 @@ class ZeroOneKnapsackSolverTest {
         val expectedItem = Item(1, weight("4.5"), value("10.0"))
         val otherItem = Item(2, weight("5.5"), value("10.0"))
         expect(listOf(expectedItem), {
-            solver.solve(weight("5.0"), listOf(expectedItem, otherItem))
+            solver.solve(KnapsackProblem(weight("5.0"), listOf(expectedItem, otherItem)))
         })
     }
 
@@ -89,7 +89,7 @@ class ZeroOneKnapsackSolverTest {
         val expectedItem1 = Item(1, weight("2.5"), value("10.0"))
         val expectedItem2 = Item(2, weight("2.5"), value("10.0"))
         expect(listOf(expectedItem1, expectedItem2), {
-            solver.solve(weight("5.0"), listOf(expectedItem1, expectedItem2))
+            solver.solve(KnapsackProblem(weight("5.0"), listOf(expectedItem1, expectedItem2)))
         })
     }
 
@@ -99,7 +99,7 @@ class ZeroOneKnapsackSolverTest {
         val expectedItem2 = Item(2, weight("2.5"), value("10.0"))
         val otherItem = Item(3, weight("5.5"), value("10.0"))
 
-        val solution = solver.solve(weight("5.0"), listOf(expectedItem1, expectedItem2, otherItem))
+        val solution = solver.solve(KnapsackProblem(weight("5.0"), listOf(expectedItem1, expectedItem2, otherItem)))
         assertThat(solution, contains(matching(expectedItem1), matching(expectedItem2)))
     }
 
@@ -109,7 +109,7 @@ class ZeroOneKnapsackSolverTest {
         val expectedItem1 = Item(2, weight("2.45"), value("10.0"))
         val expectedItem2 = Item(3, weight("2.5"), value("10.0"))
 
-        val solution = solver.solve(weight("5.0"), listOf(otherItem, expectedItem1, expectedItem2))
+        val solution = solver.solve(KnapsackProblem(weight("5.0"), listOf(otherItem, expectedItem1, expectedItem2)))
         assertThat(solution, contains(matching(expectedItem1), matching(expectedItem2)))
     }
 
@@ -119,7 +119,7 @@ class ZeroOneKnapsackSolverTest {
         val lessValuableItem = Item(2, weight("3.5"), value("10.0"))
 
         expect(listOf(moreValuableItem), {
-            solver.solve(weight("5.0"), listOf(moreValuableItem, lessValuableItem))
+            solver.solve(KnapsackProblem(weight("5.0"), listOf(moreValuableItem, lessValuableItem)))
         })
     }
 
@@ -130,7 +130,7 @@ class ZeroOneKnapsackSolverTest {
         val expectedItem2 = Item(3, weight("3.5"), value("10.0"))
 
         expect(listOf(expectedItem1, expectedItem2), {
-            solver.solve(weight("6.0"), listOf(expectedItem1, expectedItem2, otherItem))
+            solver.solve(KnapsackProblem(weight("6.0"), listOf(expectedItem1, expectedItem2, otherItem)))
         })
     }
 
@@ -142,7 +142,7 @@ class ZeroOneKnapsackSolverTest {
         val item4 = Item(4, weight("1.0"), value("5.0"))
 
         expect(listOf(item2, item4), {
-            solver.solve(weight("11.0"), listOf(item1, item2, item3, item4))
+            solver.solve(KnapsackProblem(weight("11.0"), listOf(item1, item2, item3, item4)))
         })
     }
 

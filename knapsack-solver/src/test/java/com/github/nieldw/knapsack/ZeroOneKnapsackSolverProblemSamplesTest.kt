@@ -22,7 +22,7 @@ class ZeroOneKnapsackSolverProblemSamplesTest {
                 Item(4, weight("72.30"), value("76")),
                 Item(5, weight("30.18"), value("9")),
                 Item(6, weight("46.34"), value("48")))
-        val solution = solver.solve(weight("81"), items)
+        val solution = solver.solve(KnapsackProblem(weight("81"), items))
         assertEquals(1, solution.size)
         assertEquals(4, solution[0].index)
     }
@@ -30,7 +30,7 @@ class ZeroOneKnapsackSolverProblemSamplesTest {
     @Test
     fun `solve sample problem 2`() {
         val items = listOf(Item(1, weight("15.3"), value("34")))
-        val solution = solver.solve(weight("8"), items)
+        val solution = solver.solve(KnapsackProblem(weight("8"), items))
         assertEquals(0, solution.size)
     }
 
@@ -46,7 +46,7 @@ class ZeroOneKnapsackSolverProblemSamplesTest {
                 Item(7, weight("60.02"), value("74")),
                 Item(8, weight("93.18"), value("35")),
                 Item(9, weight("89.95"), value("78")))
-        val solution = solver.solve(weight("75"), items)
+        val solution = solver.solve(KnapsackProblem(weight("75"), items))
         assertEquals(2, solution.size)
         assertEquals(listOf(2, 7), solution.map { it.index })
     }
@@ -63,7 +63,7 @@ class ZeroOneKnapsackSolverProblemSamplesTest {
                 Item(7, weight("81.80"), value("45")),
                 Item(8, weight("19.36"), value("79")),
                 Item(9, weight("6.76"), value("64")))
-        val solution = solver.solve(weight("56"), items)
+        val solution = solver.solve(KnapsackProblem(weight("56"), items))
         assertEquals(2, solution.size)
         assertEquals(listOf(8, 9), solution.map { it.index })
     }
