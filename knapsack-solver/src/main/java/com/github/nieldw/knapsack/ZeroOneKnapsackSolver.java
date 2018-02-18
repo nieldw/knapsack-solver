@@ -33,9 +33,9 @@ public class ZeroOneKnapsackSolver extends ConstrainedKnapsackSolver implements 
     }
 
     @Override
-    public List<Item> solve(KnapsackProblem problem) throws IllegalArgumentException {
+    public KnapsackSolution solve(KnapsackProblem problem) throws IllegalArgumentException {
         checkConstraints(problem);
-        return solveProblem(problem.getWeightLimit(), problem.getItems());
+        return new KnapsackSolution(solveProblem(problem.getWeightLimit(), problem.getItems()));
     }
 
     private List<Item> solveProblem(@NotNull BigDecimal weightLimit, @NotNull List<Item> items) throws IllegalArgumentException {

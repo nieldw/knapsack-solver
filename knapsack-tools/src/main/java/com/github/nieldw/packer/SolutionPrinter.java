@@ -1,6 +1,6 @@
 package com.github.nieldw.packer;
 
-import com.github.nieldw.knapsack.Item;
+import com.github.nieldw.knapsack.KnapsackSolution;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface SolutionPrinter {
      * @param solution The solution to a {@link com.github.nieldw.knapsack.KnapsackProblem}
      * @return The String representation of the solution
      */
-    String print(List<Item> solution);
+    String print(List<KnapsackSolution> solution);
 }
