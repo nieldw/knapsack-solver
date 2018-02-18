@@ -1,5 +1,8 @@
 package com.github.nieldw.knapsack
 
+import com.github.nieldw.knapsack.matcher.ItemMatcher.Companion.matching
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.contains
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -83,22 +86,22 @@ class ZeroOneKnapsackSolverTest {
 
     @Test
     fun `solve for three items, first two included, by weight only`() {
-        val expectedItem1 = Item(1, weight("2.5"), value("10.0"))
+        val expectedItem1 = Item(1, weight("2.45"), value("10.0"))
         val expectedItem2 = Item(2, weight("2.5"), value("10.0"))
         val otherItem = Item(3, weight("5.5"), value("10.0"))
-        expect(listOf(expectedItem1, expectedItem2), {
-            solver.solve(weight("5.0"), listOf(expectedItem1, expectedItem2, otherItem))
-        })
+
+        val solution = solver.solve(weight("5.0"), listOf(expectedItem1, expectedItem2, otherItem))
+        assertThat(solution, contains(matching(expectedItem1), matching(expectedItem2)))
     }
 
     @Test
     fun `solve for three items, last two included, by weight only`() {
         val otherItem = Item(1, weight("5.5"), value("10.0"))
-        val expectedItem1 = Item(2, weight("2.5"), value("10.0"))
+        val expectedItem1 = Item(2, weight("2.45"), value("10.0"))
         val expectedItem2 = Item(3, weight("2.5"), value("10.0"))
-        expect(listOf(expectedItem1, expectedItem2), {
-            solver.solve(weight("5.0"), listOf(otherItem, expectedItem1, expectedItem2))
-        })
+
+        val solution = solver.solve(weight("5.0"), listOf(otherItem, expectedItem1, expectedItem2))
+        assertThat(solution, contains(matching(expectedItem1), matching(expectedItem2)))
     }
 
     @Disabled
