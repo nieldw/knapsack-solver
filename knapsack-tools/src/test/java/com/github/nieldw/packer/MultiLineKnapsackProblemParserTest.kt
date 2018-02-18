@@ -27,15 +27,30 @@ internal class MultiLineKnapsackProblemParserTest {
                 Item(5, weight("30.18"), value("9")),
                 Item(6, weight("46.34"), value("48")))
         val knapsackProblem = KnapsackProblem(weight("81"), items)
-        expect(knapsackProblem, {
+        expect(listOf(knapsackProblem), {
             parser.parse(line)
         })
     }
 
     @Test
+    fun `should parse more than one correct line successfully`() {
+        val lines = "81 : (1,53.38,€45) (2,88.62,€98)\n" +
+                "8 : (1,15.3,€34)"
+        val items = listOf(
+                Item(1, weight("53.38"), value("45")),
+                Item(2, weight("88.62"), value("98")))
+        val knapsackProblem1 = KnapsackProblem(weight("81"), items)
+        val knapsackProblem2 = KnapsackProblem(weight("8"), listOf(Item(1, weight("15.3"), value("34"))))
+        expect(listOf(knapsackProblem1, knapsackProblem2), {
+            parser.parse(lines)
+        })
+    }
+
+    @Test
     fun `should throw APIException if line is misformed`() {
-        val line = "11 : (bla)"
-        assertFailsWith<APIException> { parser.parse(line) }
+        val lines = "81 : (1,53.38,€45) (2,88.62,€98)\n" +
+                "11 : (bla)"
+        assertFailsWith<APIException> { parser.parse(lines) }
     }
 
     private fun weight(string: String) = BigDecimal(string)
