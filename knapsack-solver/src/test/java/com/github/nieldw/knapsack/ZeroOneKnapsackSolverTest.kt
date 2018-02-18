@@ -1,5 +1,7 @@
 package com.github.nieldw.knapsack
 
+import com.github.nieldw.knapsack.constraints.Constraint
+import com.github.nieldw.knapsack.constraints.KnapsackProblemConstraintViolationException
 import com.github.nieldw.knapsack.matcher.ItemMatcher.Companion.matching
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.contains
@@ -22,6 +24,14 @@ class ZeroOneKnapsackSolverTest {
     @Test
     fun `it should throw IllegalArgumentException if set contains an item with index less than 1`() {
         assertFailsWith<IllegalArgumentException> {
+            solver.solve(ONE, listOf(Item(1, ONE, ONE), Item(0, ONE, ONE)))
+        }
+    }
+
+    @Test
+    fun `it should throw KnapsackProblemConstraintViolationException if constraint is violated`() {
+        this.solver = ZeroOneKnapsackSolver(listOf(Constraint { throw KnapsackProblemConstraintViolationException("dummy constraint violated") }))
+        assertFailsWith<KnapsackProblemConstraintViolationException> {
             solver.solve(ONE, listOf(Item(1, ONE, ONE), Item(0, ONE, ONE)))
         }
     }

@@ -1,12 +1,10 @@
 package com.github.nieldw.knapsack;
 
+import com.github.nieldw.knapsack.constraints.Constraint;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 import static java.lang.String.format;
@@ -19,9 +17,28 @@ import static java.util.stream.Collectors.toList;
 /**
  * A solver for the 0/1 knapsack problem.
  */
-public class ZeroOneKnapsackSolver implements KnapsackSolver {
+public class ZeroOneKnapsackSolver extends ConstrainedKnapsackSolver implements KnapsackSolver {
+
+    ZeroOneKnapsackSolver() {
+        this(Collections.emptyList());
+    }
+
+    /**
+     * Constructs a new {@link ZeroOneKnapsackSolver}.
+     *
+     * @param constraints The {@link Constraint}s applied to problems by this {@link KnapsackSolver}
+     */
+    ZeroOneKnapsackSolver(List<Constraint> constraints) {
+        super(constraints);
+    }
+
     @Override
-    public List<Item> solve(@NotNull BigDecimal weightLimit, @NotNull List<Item> items) throws IllegalArgumentException {
+    public List<Item> solve(KnapsackProblem problem) throws IllegalArgumentException {
+        checkConstraints(problem);
+        return solveProblem(problem.getWeightLimit(), problem.getItems());
+    }
+
+    private List<Item> solveProblem(@NotNull BigDecimal weightLimit, @NotNull List<Item> items) throws IllegalArgumentException {
         items.forEach(item -> {
             if (item.getIndex() < 1) {
                 throw new IllegalArgumentException(format("All items must have index > 1. Found index %d", item.getIndex()));
