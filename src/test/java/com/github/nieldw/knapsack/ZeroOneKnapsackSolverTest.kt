@@ -107,6 +107,7 @@ class ZeroOneKnapsackSolverTest {
     fun `the solution for two items, with combined weight exceeding limit, is more valuable item`() {
         val moreValuableItem = Item(1, weight("4.5"), value("20.0"))
         val lessValuableItem = Item(2, weight("3.5"), value("10.0"))
+
         expect(listOf(moreValuableItem), {
             solver.solve(weight("5.0"), listOf(moreValuableItem, lessValuableItem))
         })
@@ -120,6 +121,18 @@ class ZeroOneKnapsackSolverTest {
 
         expect(listOf(expectedItem1, expectedItem2), {
             solver.solve(weight("6.0"), listOf(expectedItem1, expectedItem2, otherItem))
+        })
+    }
+
+    @Test
+    fun `if two different solutions have the same total value, prefer one with less weight 1`() {
+        val item1 = Item(1, weight("9.0"), value("5.0"))
+        val item2 = Item(2, weight("6.0"), value("5.0"))
+        val item3 = Item(3, weight("5.0"), value("4.0"))
+        val item4 = Item(4, weight("1.0"), value("5.0"))
+
+        expect(listOf(item2, item4), {
+            solver.solve(weight("11.0"), listOf(item1, item2, item3, item4))
         })
     }
 
