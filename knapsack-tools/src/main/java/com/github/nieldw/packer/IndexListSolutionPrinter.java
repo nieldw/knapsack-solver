@@ -23,7 +23,7 @@ public class IndexListSolutionPrinter implements SolutionPrinter {
             List<Item> items = knapsackSolution.getItems();
             if (items.isEmpty()) {
                 output.append("-\n");
-                break;
+                continue;
             }
 
             for (Item item : items) {

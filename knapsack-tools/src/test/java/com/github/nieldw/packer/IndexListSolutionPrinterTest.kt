@@ -25,12 +25,13 @@ internal class IndexListSolutionPrinterTest {
         expect(
                 "1\n" +
                         "2,4\n" +
-                        "-\n", {
+                        "-\n" +
+                        "2\n", {
             solutionPrinter.print(listOf(
                     KnapsackSolution(listOf(Item(1, ZERO, ZERO))),
                     KnapsackSolution(listOf(Item(2, ZERO, ZERO), Item(4, ZERO, ZERO))),
-                    KnapsackSolution(emptyList())
-            ))
+                    KnapsackSolution(emptyList()),
+                    KnapsackSolution(listOf(Item(2, ZERO, ZERO)))))
         })
     }
 }
