@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -53,13 +54,15 @@ public class Packer {
 
     @NotNull
     private static PackingController getPackingController() {
-        KnapsackProblemParser parser = new MultiLineKnapsackProblemParser();
-        SolutionPrinter printer = new IndexListSolutionPrinter();
-        KnapsackSolver solver = new ZeroOneKnapsackSolver(asList(
+        List<Constraint> constraints = asList(
                 new KnapsackWeightConstraint(new BigDecimal("100")),
                 new ItemListSizeConstraint(15),
                 new ItemValueConstraint(new BigDecimal("100")),
-                new ItemWeightConstraint(new BigDecimal("100"))));
+                new ItemWeightConstraint(new BigDecimal("100")));
+
+        KnapsackProblemParser parser = new MultiLineKnapsackProblemParser(constraints);
+        SolutionPrinter printer = new IndexListSolutionPrinter();
+        KnapsackSolver solver = new ZeroOneKnapsackSolver();
 
         return new PackingController(parser, printer, solver);
     }

@@ -2,6 +2,8 @@ package com.github.nieldw.packer
 
 import com.github.nieldw.knapsack.Item
 import com.github.nieldw.knapsack.KnapsackProblem
+import com.github.nieldw.knapsack.constraints.Constraint
+import com.github.nieldw.knapsack.constraints.KnapsackProblemConstraintViolationException
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -47,7 +49,15 @@ internal class MultiLineKnapsackProblemParserTest {
     }
 
     @Test
-    fun `should throw APIException if line is misformed`() {
+    fun `it should throw KnapsackProblemConstraintViolationException if constraint is violated`() {
+        this.parser = MultiLineKnapsackProblemParser(listOf(Constraint { throw KnapsackProblemConstraintViolationException("dummy constraint violated") }))
+        assertFailsWith<KnapsackProblemConstraintViolationException> {
+            parser.parse("8 : (1,15.3,€34)")
+        }
+    }
+
+    @Test
+    fun `should throw APIException if line is malformed`() {
         val lines = "81 : (1,53.38,€45) (2,88.62,€98)\n" +
                 "11 : (bla)"
         assertFailsWith<APIException> { parser.parse(lines) }

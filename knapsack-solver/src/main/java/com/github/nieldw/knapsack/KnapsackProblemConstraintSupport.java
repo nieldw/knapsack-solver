@@ -10,19 +10,19 @@ import static java.util.Optional.ofNullable;
 /**
  * Abstract class that provides support for checking {@link KnapsackProblem} {@link Constraint}s.
  */
-abstract class ConstrainedKnapsackSolver implements KnapsackSolver {
+public abstract class KnapsackProblemConstraintSupport {
     private List<Constraint> constraints;
 
     /**
-     * Constructs a new {@link ConstrainedKnapsackSolver}.
+     * Constructs a new {@link KnapsackProblemConstraintSupport}.
      *
-     * @param constraints The {@link Constraint}s applied to problems by this {@link KnapsackSolver}
+     * @param constraints The {@link Constraint}s applied to problems by this object
      */
-    ConstrainedKnapsackSolver(List<Constraint> constraints) {
+    protected KnapsackProblemConstraintSupport(List<Constraint> constraints) {
         this.constraints = ofNullable(constraints).orElse(Collections.emptyList());
     }
 
-    void checkConstraints(KnapsackProblem problem) {
+    public void checkConstraints(KnapsackProblem problem) {
         constraints.forEach(constraint -> constraint.check(problem));
     }
 }

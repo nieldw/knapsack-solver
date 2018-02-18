@@ -1,10 +1,12 @@
 package com.github.nieldw.knapsack;
 
-import com.github.nieldw.knapsack.constraints.Constraint;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static java.lang.String.format;
@@ -17,24 +19,10 @@ import static java.util.stream.Collectors.toList;
 /**
  * A solver for the 0/1 knapsack problem.
  */
-public class ZeroOneKnapsackSolver extends ConstrainedKnapsackSolver implements KnapsackSolver {
-
-    public ZeroOneKnapsackSolver() {
-        this(Collections.emptyList());
-    }
-
-    /**
-     * Constructs a new {@link ZeroOneKnapsackSolver}.
-     *
-     * @param constraints The {@link Constraint}s applied to problems by this {@link KnapsackSolver}
-     */
-    public ZeroOneKnapsackSolver(List<Constraint> constraints) {
-        super(constraints);
-    }
+public class ZeroOneKnapsackSolver implements KnapsackSolver {
 
     @Override
     public KnapsackSolution solve(KnapsackProblem problem) throws IllegalArgumentException {
-        checkConstraints(problem);
         return new KnapsackSolution(solveProblem(problem.getWeightLimit(), problem.getItems()));
     }
 
