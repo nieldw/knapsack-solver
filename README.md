@@ -32,5 +32,5 @@ Constraints are checked at the time of problem parsing to ensure all `KnapsackPr
 
 ## Tools
 
-Alongside the knapsack-solver module a collection of tools are provided to simplify dealing with knapsack problems. 
+Alongside the `knapsack-solver` module a collection of tools are provided to simplify dealing with knapsack problems. 
 Please see the [knapsack-tools](knapsack-tools/README.md) module.
